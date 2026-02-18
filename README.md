@@ -8,6 +8,7 @@ graph TD
         UC2 --> Asterisk
         UC3 ..> UC4 : <<include>>
     end
+
     sequenceDiagram
     autonumber
     participant S as Server (Down)
@@ -19,14 +20,24 @@ graph TD
     Z->>Z: Trigger: High Severity
     Note over Z,A: Виклик API (AMI Originate)
     Z->>A: POST /api/v1/make_call (Ext: 101)
-    
+
     A->>P: SIP INVITE (Calling...)
-    P-->>A: 180 RingingstateDiagram-v2
+    P-->>A: 180 Ringing
+    P-->>A: 200 OK (Слухавку піднято)
+
+    Note right of A: Встановлення медіа-потоку
+    A->>P: RTP Stream (Audio: "Alert! Server 1 is offline")
+
+    P-->>A: SIP BYE (Клієнт поклав слухавку)
+    A-->>Z: Call Result: Success
+
+
+    stateDiagram-v2
     [*] --> Monitoring: Zabbix активний
     Monitoring --> IncidentDetected: Сервер не відповідає
-    
+
     IncidentDetected --> SendApiRequest: Формування API запиту
-    
+
     state "Процес виклику" as CallProcess {
         [*] --> InitiatingCall
         InitiatingCall --> CallRinging
@@ -41,13 +52,5 @@ graph TD
     state RetryLogic <<choice>>
     RetryLogic --> SendApiRequest: Спроба < 3
     RetryLogic --> LogError: Спроби вичерпано
-    
+
     LogError --> [*]
-    P-->>A: 200 OK (Слухавку піднято)
-    
-    Note right of A: Встановлення медіа-потоку
-    A->>P: RTP Stream (Audio: "Alert! Server 1 is offline")
-    
-    P-->>A: SIP BYE (Клієнт поклав слухавку)
-    A-->>Z: Call Result: Success
-    
