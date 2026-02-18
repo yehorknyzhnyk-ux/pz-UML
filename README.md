@@ -1,3 +1,7 @@
+# UML Моделювання системи сповіщень
+
+## 1. Use Case Diagram
+
 ```mermaid
 graph TD
     Server["Сервер (Об'єкт)"] --- UC1((Виявлення недоступності))
@@ -5,9 +9,9 @@ graph TD
     Asterisk["Asterisk (SIP-сервер)"] --- UC3((Встановлення SIP-з'єднання))
 
     subgraph "Система моніторингу та зв'язку"
-        UC1 ..> UC2((Надсилання запиту API)) : <<include>>
+        UC1 --> UC2((Надсилання запиту API))
         UC2 --> Asterisk
-        UC3 ..> UC4 : <<include>>
+        UC3 --> UC4
     end
 ```
 ###
