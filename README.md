@@ -1,4 +1,5 @@
-graph TD
+```
+raph TD
     Server["Сервер (Об'єкт)"] --- UC1((Виявлення недоступності))
     Admin["Адміністратор (Клієнт)"] --- UC4((Відтворення повідомлення))
     Asterisk["Asterisk (SIP-сервер)"] --- UC3((Встановлення SIP-з'єднання))
@@ -8,7 +9,9 @@ graph TD
         UC2 --> Asterisk
         UC3 ..> UC4 : <<include>>
     end
-
+```
+###
+```
     sequenceDiagram
     autonumber
     participant S as Server (Down)
@@ -30,8 +33,9 @@ graph TD
 
     P-->>A: SIP BYE (Клієнт поклав слухавку)
     A-->>Z: Call Result: Success
-
-
+```
+###
+```
     stateDiagram-v2
     [*] --> Monitoring: Zabbix активний
     Monitoring --> IncidentDetected: Сервер не відповідає
@@ -54,3 +58,4 @@ graph TD
     RetryLogic --> LogError: Спроби вичерпано
 
     LogError --> [*]
+```
