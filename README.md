@@ -1,5 +1,5 @@
-```
-raph TD
+```mermaid
+graph TD
     Server["Сервер (Об'єкт)"] --- UC1((Виявлення недоступності))
     Admin["Адміністратор (Клієнт)"] --- UC4((Відтворення повідомлення))
     Asterisk["Asterisk (SIP-сервер)"] --- UC3((Встановлення SIP-з'єднання))
@@ -11,7 +11,7 @@ raph TD
     end
 ```
 ###
-```
+```mermaid
     sequenceDiagram
     autonumber
     participant S as Server (Down)
@@ -35,7 +35,7 @@ raph TD
     A-->>Z: Call Result: Success
 ```
 ###
-```
+```mermaid
     stateDiagram-v2
     [*] --> Monitoring: Zabbix активний
     Monitoring --> IncidentDetected: Сервер не відповідає
